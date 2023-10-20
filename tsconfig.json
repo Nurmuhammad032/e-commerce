@@ -9,7 +9,7 @@
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "sourceMap": true,
     "outDir": "dist"
   },

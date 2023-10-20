@@ -2,18 +2,30 @@ import express from "express";
 import dotenv from "dotenv";
 import importRoute from "./importRoute";
 import productRoute from "./routes/productRoute";
-import connectDatabase from "config/MongoDb";
-
+import userRoute from "./routes/userRoute";
+import connectDatabase from "./config/MongoDb";
+import { errorHandler, notFound } from "./middleware/error";
 dotenv.config();
-const app = express();
-// connectDatabase();
 
+const app = express();
+
+// Middleware
+// ==============================
+app.use(express.json());
+
+connectDatabase();
+
+// Routes
+// ==============================
 app.use("/api/import", importRoute);
 app.use("/api/products", productRoute);
-app.get("/", (req, res) => {
-  res.send("api running");
-});
-console.log("hello");
+app.use("/api/users", userRoute);
+
+// Error handler middleware
+// ==============================
+app.use(notFound);
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 1000;
 
 app.listen(PORT, () => {

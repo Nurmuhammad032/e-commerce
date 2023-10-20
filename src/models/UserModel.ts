@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -25,7 +26,15 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+interface User extends InferSchemaType<typeof userSchema> {
+  matchPassword(enterPassword: string): Promise<boolean>;
+}
 
-const User = mongoose.model("User", userSchema);
+// Login
+userSchema.methods.matchPassword = async function (enterPassword: string) {
+  return await bcrypt.compare(enterPassword, this.password);
+};
+
+const User = mongoose.model<User>("User", userSchema);
 
 export default User;
