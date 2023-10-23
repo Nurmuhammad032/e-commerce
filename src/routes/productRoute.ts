@@ -1,5 +1,6 @@
-import express from "express";
+import express, { Response, Request } from "express";
 import { getProducts, getProduct } from "../controllers/product";
+import IRequest from "../types/customRequest";
 
 const router = express.Router();
 

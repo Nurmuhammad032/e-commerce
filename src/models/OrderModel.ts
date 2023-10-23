@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
@@ -70,6 +70,9 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("Order", orderSchema);
+// Define the interface for order documents
+export type IOrder = InferSchemaType<typeof orderSchema>;
 
-export default User;
+const Order = mongoose.model("Order", orderSchema);
+
+export default Order;
